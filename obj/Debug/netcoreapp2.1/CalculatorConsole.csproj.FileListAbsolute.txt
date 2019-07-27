@@ -1,0 +1,11 @@
+C:\GitHub\ITvitae\CalculatorConsole\bin\Debug\netcoreapp2.1\CalculatorConsole.deps.json
+C:\GitHub\ITvitae\CalculatorConsole\bin\Debug\netcoreapp2.1\CalculatorConsole.runtimeconfig.json
+C:\GitHub\ITvitae\CalculatorConsole\bin\Debug\netcoreapp2.1\CalculatorConsole.runtimeconfig.dev.json
+C:\GitHub\ITvitae\CalculatorConsole\bin\Debug\netcoreapp2.1\CalculatorConsole.dll
+C:\GitHub\ITvitae\CalculatorConsole\bin\Debug\netcoreapp2.1\CalculatorConsole.pdb
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.csprojAssemblyReference.cache
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.csproj.CoreCompileInputs.cache
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.AssemblyInfoInputs.cache
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.AssemblyInfo.cs
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.dll
+C:\GitHub\ITvitae\CalculatorConsole\obj\Debug\netcoreapp2.1\CalculatorConsole.pdb
