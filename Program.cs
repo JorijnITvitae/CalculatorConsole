@@ -9,7 +9,7 @@ namespace CalculatorConsole
             string input = Console.ReadLine();
 
             Calculator calculator = new Calculator();
-            double answer = calculator.Compute(input);
+            string answer = calculator.Compute(input);
 
             Console.WriteLine(answer);
         }

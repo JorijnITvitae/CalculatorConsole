@@ -8,6 +8,7 @@ namespace CalculatorConsole
     {
         private enum ItemType
         {
+            NULL,
             ANSWER,
             NUMBER,
             SUBTRACT,
@@ -81,6 +82,7 @@ namespace CalculatorConsole
         }
 
         // Fill the list of items, meaning operations (like multiply), and numbers.
+        // If there is a syntax error, return an empty list.
         private List<Item> Interpret(string input)
         {
             List<Item> items = new List<Item>(); // The list of items.
@@ -92,7 +94,11 @@ namespace CalculatorConsole
                 // If this character is part of a number, add it to the string.
                 if (Char.IsDigit(c) || c == '.' || c == ',')
                 {
-                    numberString += c;
+                    // double.Parse() doesn't treat comma's as dot's, so replace them.
+                    if (c == ',')
+                        numberString += '.';
+                    else
+                        numberString += c;
                 }
                 // If we reached the end of this number on the previous character, add the number to the list of items and clear the temporary string.
                 else if (numberString.Length != 0)
@@ -143,19 +149,19 @@ namespace CalculatorConsole
             return items;
         }
 
-        public double Compute(string input)
+        public string Compute(string input)
         {
             // Fill the list of items based on the input string.
             List<Item> items = Interpret(input);
 
             // If the list is empty, the user used incorrect syntax.
-            if (items.Count < 1) return 0;
+            if (items.Count < 1) return "SYNTAX ERROR";
 
             // Keep repeating these steps until the list of items has been simplified to one.
             while (items.Count > 1)
             {
                 // Temporary variable to store the item highest in the math hiearchy.
-                ItemType highestType = ItemType.NUMBER;
+                ItemType highestType = ItemType.NULL;
 
                 // Temporary variable to store the position of the action to be exectured in the list.
                 int itemPosition = -1;
@@ -191,7 +197,7 @@ namespace CalculatorConsole
 
             // Store the answer and return it.
             answer = items[0].number;
-            return answer;
+            return answer.ToString();
         }
     }
 }
