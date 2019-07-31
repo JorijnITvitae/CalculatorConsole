@@ -78,6 +78,48 @@ namespace CalculatorConsole
                         return 0;
                 }
             }
+
+            public override string ToString()
+            {
+                switch (type)
+                {
+                    case ItemType.ANSWER:
+                        return "a";
+
+                    case ItemType.NUMBER:
+                        return number.ToString();
+
+                    case ItemType.POWER:
+                        return "^";
+
+                    case ItemType.ROOT:
+                        return "v";
+
+                    case ItemType.SQUARE_ROOT:
+                        return "2v";
+
+                    case ItemType.MULTIPLY:
+                        return "*";
+
+                    case ItemType.DIVIDE:
+                        return "/";
+
+                    case ItemType.ADD:
+                        return "+";
+
+                    case ItemType.SUBTRACT:
+                        return "-";
+
+                    case ItemType.OPENING_BRACKET:
+                        return "(";
+                        
+                    case ItemType.CLOSING_BRACKET:
+                        return ")";
+
+                    default:
+                        return "?";
+                }
+            }
         }
 
         private enum ErrorType
@@ -98,6 +140,18 @@ namespace CalculatorConsole
                 error = ErrorType.UNKNOWN;
                 items = new List<Item>();
             }
+
+            public override string ToString()
+            {
+                string str = "";
+
+                foreach (Item item in items)
+                {
+                    str += item.ToString();
+                }
+
+                return str;
+            }
         }
 
         private double memory;
@@ -113,13 +167,13 @@ namespace CalculatorConsole
         {
             // Reference variable for convenience.
             List<Item> items = itemList.items;
-            
+
             // Keep repeating these steps until the list of items has been simplified to one.
             while (items.Count > 1)
             {
                 // Temporary variable to store the highest in the math hiearchy we've found.
                 // 0 = number, answer; 1 = add, subtract; 2 = multiply, divide; 3 = power, root.
-                int highestHiearchy = 0;
+                int highestHiearchy = -1;
 
                 // Temporary variable to store the position of the action to be executed in the list.
                 int itemPosition = -1;
@@ -146,11 +200,10 @@ namespace CalculatorConsole
                     }
                 }
 
+                // If no action was found, we're done.
+                if (itemPosition < 0) break;
+
                 // Temporary variables to make the code more readable.
-                Console.WriteLine(itemPosition - 1);
-                Console.WriteLine(itemPosition);
-                Console.WriteLine(itemPosition + 1);
-                Console.ReadLine();
                 double numX = items[itemPosition - 1].number;
                 Item action = items[itemPosition];
                 double numY = items[itemPosition + 1].number;
@@ -328,7 +381,7 @@ namespace CalculatorConsole
                 int closing = -1;
 
                 // Search for pairs of brackets.
-                for (int i = 0; i > items.Count; i++)
+                for (int i = 0; i < items.Count; i++)
                 {
                     // Store the opening bracket we found last.
                     if (items[i].type == ItemType.OPENING_BRACKET)
@@ -347,8 +400,6 @@ namespace CalculatorConsole
                 // A pair of brackets was found.
                 if (opening >= 0 && closing >= 0)
                 {
-                    // TODO: Clean and compute the item list between the brackets.
-
                     // Get the items between the brackets.
                     int index = opening + 1;
                     int count = closing - index;
@@ -369,8 +420,8 @@ namespace CalculatorConsole
                     if (tempList.error != ErrorType.SUCCESS)
                         return; // Exit because there's an error.
 
-                    // Finally remove the solved items.
-                    items.RemoveRange(opening, closing - opening);
+                    // Finally remove the solved items and brackets.
+                    items.RemoveRange(opening, closing - opening + 1);
                     // And insert the answer in its place.
                     items.Insert(opening, tempList.items[0]);
                 }
@@ -391,7 +442,7 @@ namespace CalculatorConsole
                     return; // Exit because we're done.
                 }
 
-                // We can't find both brackets necessary for a pair.
+                // We can only find one of the brackets necessary for a pair.
                 else
                 {
                     itemList.error = ErrorType.SYNTAX_ERROR;
